@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Startup Launchpad</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="hero">
+        <h1>AI Startup Launchpad</h1>
+        <p>Turn your raw startup idea into a structured, investor-ready draft — in seconds.</p>
+    </header>
+    <main class="container">
+        <section class="input-section">
+            <textarea id="ideaInput" placeholder="Describe your startup idea..."></textarea>
+            <button id="generateBtn">Generate Analysis</button>
+            <p id="errorMsg" class="error-msg"></p>
+        </section>
+        <section class="results-grid" id="resultsGrid"></section>
+    </main>
+    <footer>
+        <p>Built with FastAPI + Google Gemini 1.5 Flash · Streamed live via SSE</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

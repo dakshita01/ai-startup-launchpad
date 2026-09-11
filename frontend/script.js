@@ -1,4 +1,4 @@
-const BACKEND_URL = "http://localhost:8000";
+const BACKEND_URL = "https://ai-startup-launchpad.onrender.com";
 
 const SECTION_LABELS = {
   business_summary: "Business Summary",

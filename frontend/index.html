@@ -3,25 +3,171 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Startup Launchpad</title>
+<title>Startup Launchpad AI</title>
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <header class="hero">
-        <h1>AI Startup Launchpad</h1>
-        <p>Turn your raw startup idea into a structured, investor-ready draft — in seconds.</p>
+<body class="dark">
+  <div class="app-root">
+    <canvas id="aurora-canvas"></canvas>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="light-grid"></div>
+
+    <header class="app-header">
+      <div class="header-left">
+        <div class="wordmark">
+          <div class="wordmark-dot"></div>
+          Startup Launchpad
+          <span style="font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:0.14em; color:var(--text-3); margin-left:4px;">AI</span>
+        </div>
+        <!-- Online Green Status Pop-Up Badge -->
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          <span class="status-text">ONLINE</span>
+        </div>
+      </div>
+
+      <div class="mode-toggle" id="modeToggle" role="button" aria-label="Toggle color mode">
+        <button class="toggle-pill active" id="darkPill" aria-label="Dark mode">🌙</button>
+        <button class="toggle-pill" id="lightPill" aria-label="Light mode">☀️</button>
+      </div>
     </header>
-    <main class="container">
-        <section class="input-section">
-            <textarea id="ideaInput" placeholder="Describe your startup idea..."></textarea>
-            <button id="generateBtn">Generate Analysis</button>
-            <p id="errorMsg" class="error-msg"></p>
-        </section>
-        <section class="results-grid" id="resultsGrid"></section>
-    </main>
-    <footer>
-        <p>Built with FastAPI + Google Gemini 1.5 Flash · Streamed live via SSE</p>
+
+    <div class="hero">
+      <div class="hero-left">
+        <div class="eyebrow">
+          <span class="eyebrow-badge">NEW</span>
+          <span>Investor-ready analysis in seconds</span>
+        </div>
+
+        <h1 class="hero-h1">
+          From raw idea<br>
+          to <em>investor deck</em><br>
+          in one click.
+        </h1>
+
+        <p class="hero-sub">
+          Paste any startup concept — however rough. Our AI structures it into
+          8 investor-ready sections: business model, problem framing, SWOT,
+          revenue projections, and a pitch you can actually send.
+        </p>
+
+        <div class="hero-stats">
+          <div>
+            <div class="stat-num">8</div>
+            <div class="stat-label">SECTIONS</div>
+          </div>
+          <div>
+            <div class="stat-num">&lt;30s</div>
+            <div class="stat-label">GENERATE</div>
+          </div>
+          <div>
+            <div class="stat-num">Gemini</div>
+            <div class="stat-label">POWERED</div>
+          </div>
+        </div>
+
+        <div class="input-card">
+          <div class="input-bar">
+            <div class="input-bar-dots"><span></span><span></span><span></span></div>
+            <span class="input-bar-label">STARTUP IDEA</span>
+            <span class="input-bar-chars" id="charsLabel">0 chars</span>
+          </div>
+
+          <textarea
+            id="ideaInput"
+            class="main-textarea"
+            rows="5"
+            placeholder="Describe your startup idea...&#10;&#10;Example: A SaaS that helps local businesses like cafés and gyms use AI to grow without hiring a marketing team."
+          ></textarea>
+
+          <div class="input-footer">
+            <div>
+              <div class="error-banner fade-up" id="errorBanner" style="display:none;">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/>
+                  <path d="M6 3.5v3M6 7.8v.4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                </svg>
+                <span id="errorText"></span>
+              </div>
+              <span class="hint-text" id="hintText">⌘ ENTER TO GENERATE</span>
+            </div>
+
+            <button class="btn-gen" id="generateBtn">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                <path d="M6.5 1L8.2 5.4H13L9.4 8.1L10.7 12.5L6.5 9.8L2.3 12.5L3.6 8.1L0 5.4H4.8L6.5 1Z" fill="currentColor"/>
+              </svg>
+              <span id="generateBtnText">Generate Analysis</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="examples-wrap" id="examplesWrap">
+          <div class="examples-label">QUICK EXAMPLES</div>
+          <div class="examples-list" id="examplesList"></div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="right-heading">
+          <div class="eyebrow-mono">REPORT SECTIONS</div>
+          <div class="serif-line">8 investor-ready outputs</div>
+        </div>
+
+        <div class="section-grid-preview" id="previewGrid"></div>
+
+        <div class="pitch-preview">
+          <div class="pitch-preview-top">
+            <span class="pitch-preview-tag">PITCH PREVIEW</span>
+            <span class="pitch-preview-idx">08</span>
+          </div>
+          <div class="pitch-preview-title">Elevator Pitch</div>
+          <div class="pitch-preview-divider"></div>
+          <p class="pitch-preview-body">
+            Local businesses are losing customers to chains — not because they offer less,
+            but because they market less. We fix that in 10 minutes for $49 a month…
+          </p>
+          <div class="pitch-preview-tags">
+            <span>DRAFT</span><span>READY</span><span>PITCH</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="results-section scroll-section" id="resultsSection">
+      <div class="results-header">
+        <div class="results-header-left">
+          <div class="results-header-top">
+            <span class="label-accent">ANALYSIS REPORT</span>
+            <span class="label-dim" id="progressLabel">0/8 sections resolved</span>
+          </div>
+          <div class="prog-track">
+            <div class="prog-fill" id="progFill"></div>
+          </div>
+        </div>
+
+        <div class="results-actions fade-up" id="resultsActions" style="display:none;">
+          <button class="btn-outline" id="exportBtn">
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+              <path d="M9.5 7v2a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7M5.5 1v6M3.5 5l2 2 2-2"
+                stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            EXPORT PDF
+          </button>
+          <button class="btn-outline" id="newAnalysisBtn">NEW ANALYSIS</button>
+        </div>
+      </div>
+
+      <div class="cards-grid" id="cardsGrid"></div>
+    </div>
+
+    <footer class="app-footer">
+      <span class="footer-mono">AI STARTUP LAUNCHPAD &middot; BUILT WITH FASTAPI + GEMINI 1.5 FLASH</span>
+      <span class="footer-mono team-credit">MADE BY AITHERMINDS</span>
     </footer>
-    <script src="script.js"></script>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

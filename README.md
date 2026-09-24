@@ -67,21 +67,15 @@ Add your screenshots inside a `screenshots` folder and uncomment the images belo
 
 ## Landing Page
 
-<!--
 ![AI Startup Launchpad Landing Page](screenshots/hero.png)
--->
 
 ## Generated Analysis
 
-<!--
 ![Generated Startup Analysis](screenshots/analysis-report.png)
--->
 
 ## Full Report
 
-<!--
 ![Full Startup Analysis Report](screenshots/full-report.png)
--->
 
 Recommended screenshot structure:
 
